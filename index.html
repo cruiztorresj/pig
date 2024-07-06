@@ -7,16 +7,14 @@
 	<title>Pig</title>
 </head>
 <body>
-	<header>
-		<h1>Pig <span><img src="images/Pig.png" alt="Pig drawing" width="40" height="40"/></span></h1>
-	</header>
 	<main class="flex-container">
 		<section id="controls">
-			<button id="play" class="playable" type="button">Play</button>
+			<h1>Pig <span><img src="images/Pig.png" alt="Pig drawing" width="40" height="40"/></span></h1>
+			<button id="play" type="button" class="button">Play</button>
 		</section>
 		<section id="board">
-			<table>
-				<caption>
+			<table id="scores">
+				<caption id="info">
 				</caption>
 				<thead>
 					<tr>
@@ -26,33 +24,38 @@
 				</thead>
 				<tbody>
 					<tr>
-						<th>Human(You)</th>
-						<td>0</td>
+						<td>Human(You)</td>
+						<td id="uscore">0</td>
 					</tr>
 					<tr>
-						<th>Digital computer</th>
-						<td>0</td>
+						<td>Digital computer</td>
+						<td id="mescore">0</td>
 					</tr>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td>Pending</td>
-						<td>0</td>
+						<td id="pending">0</td>
 					</tr>
 				</tfoot>
 			</table>
-			<p>
-				<button id="play" class="playable" type="button">Roll</button>
-				<button id="play" class="playable" type="button">Hold</button>
+			<p class="goal">
+				Goal: 50.
 			</p>
-			<video width="250">
-				<source src="videos/rollingdice.mp4" type="video/mp4" />
+			<p>
+				<button id="roll" class="playable button" type="button" disabled>Roll</button>
+				<button id="hold" class="playable button" type="button" disabled>Hold</button>
+			</p>
+			<div id="vidcontainer">
+				<video id="rollingdicevideo" width="300">
+					<source src="videos/rollingdice.mp4" type="video/mp4" />
 				
-				<p>
-					Your browser doesn't support HTML video. Here is a
-					<a href="videos/rollingdice.mp4" download="videos/rollingdice.mp4">link to the video</a> instead.
-				</p>
-			</video>
+					<p>
+						Your browser doesn't support HTML video. Here is a
+						<a href="videos/rollingdice.mp4" download="videos/rollingdice.mp4">link to the video</a> instead.
+					</p>
+				</video>
+			</div>
 		</section>
 	</main>
 	<footer>

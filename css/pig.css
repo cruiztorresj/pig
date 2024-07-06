@@ -1,5 +1,110 @@
 body {
-	
-	background-color: black;
+	background-color: #000000;
 	color: aliceblue;
+}
+
+h1 {
+	text-shadow: 1px 1px 2px pink, 0 0 1em green, 0 0 0.2em blue;
+	color: yellow;
+	text-align: center;
+}
+
+.gameResult {
+	
+	color: navy;
+	background: linear-gradient(lightblue, aliceblue);
+}
+
+table {
+	
+	margin-top: 20px;
+	width: 100%;
+}
+
+td {
+	text-align: left;
+	border: dashed 1px yellow;
+}
+
+.goal {
+	
+	text-align: center;
+	background: linear-gradient(#CE4993, #6A0D83);
+}
+
+
+.flex-container {
+	
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+
+#controls {
+	
+	align-self: center;
+	vertical-align: center;
+}
+
+.playable{
+	
+	background-color: lightgreen;
+}
+
+#play {
+	
+	background: linear-gradient(-45DEG, #FCEE21, #ED1C24);
+	background-size: 400%;
+	animation: gradient 3s ease infinite;
+}
+
+.button {
+	
+	font-weight: bold;
+	color: black;
+	width: 150px;
+	height: 50px;
+	font-size: x-large;
+}
+
+footer {
+	
+  box-sizing: border-box;
+  text-align: center;
+}
+
+@media (max-width: 400px) {
+	
+	h1 { font-size: 1.5em; }
+	
+	#play, .playable {
+		
+		height: 25px;
+		font-size: 1em;
+	}
+}
+
+:disabled {
+	
+	background-color: darkgray;
+	color: linen;
+	text-decoration: line-through;
+}
+
+a {
+	
+	color: aliceblue;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position:  0% 50%;
+	}
 }
