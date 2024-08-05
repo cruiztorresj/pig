@@ -20,17 +20,16 @@ class Match {
 
 	play() {
 
-		//this.#referee.disablePlay();
-		//this.#referee.resetGame();
-		//this.#referee.currentTurn = this.#referee.decideFirstTurn();
-		//this.#referee.informTurn();
-		//    this.#board.toggleBoard(false, this.#human.move);
+		this.#referee.disablePlay();
+		this.#referee.resetGame();
+		this.#referee.currentTurn = this.#referee.decideFirstTurn();
+		this.#referee.informTurn();
+		
+		this.#referee.gui.toggleUserInteraction(false, this.#human.move);
 
-		// if(this.#referee.currentTurn === this.#computer.id) {
+		if(this.#referee.currentTurn === this.#computer.id) {
 
-			// this.#computer.move();
-			// this.#referee.currentTurn = this.#human.id;
-			// this.#referee.informTurn();
-		// }
+			this.#computer.move();
+		}
 	}
 }

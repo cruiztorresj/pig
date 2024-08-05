@@ -8,6 +8,7 @@ class Gui {
 	#cpuScore;
 	#pending;
 	#rollingDiceVideo;
+	#gameInformation;
 
 	constructor() {
 
@@ -19,6 +20,10 @@ class Gui {
 		this.#playerScore = document.getElementById('uscore');
 		this.#cpuScore = document.getElementById('mescore');
 		this.#pending = document.getElementById('pending');
+		this.#gameInformation = document.getElementById('info');
+		
+		this.animateDice = this.animateDice.bind(this);
+		this.#rollButton.addEventListener('click', this.animateDice);
 	}
 	
 	get rollingDiceVideo() {
@@ -109,5 +114,62 @@ class Gui {
 	setTextForPlayButton(text) {
 
 		this.#playButton.innerText = text;
+	}
+	
+	clean() {
+		
+		// clean scores information.
+		// take a look at reset information.
+	}
+	
+	setMessage(message) {
+
+		this.#gameInformation.innerText = message;
+	}
+	
+	toggleUserInteraction(isEnabled, userInteraction) {
+		
+		if(isEnabled) {
+			
+			this.#rollButton.toggleAttribute('disabled');
+			this.#holdButton.toggleAttribute('disabled');
+			this.#rollButton.removeEventListener('click', userInteraction);
+			this.#holdButton.removeEventListener('click', userInteraction);
+		} else {
+			
+			this.#rollButton.toggleAttribute('disabled');
+			this.#holdButton.toggleAttribute('disabled');
+			this.#rollButton.addEventListener('click', userInteraction);
+			this.#holdButton.removeEventListener('click', userInteraction);
+		}
+	}
+
+	#resetInformation() {
+
+		//this.#setMessage('');
+		//this.#board.gui.information.className = '';
+	}
+	
+	//roll.addEventListener('click', rolldice);
+
+	animateDice(evt) {
+		
+		if (this.#rollingDiceVideo.paused) {
+			
+			this.playRollingDiceVideo();
+		} else {
+			
+			this.#rollingDiceVideo.pause();
+		}
+	}
+
+	async playRollingDiceVideo() {
+		
+		try {
+			
+			await this.#rollingDiceVideo.play();
+		} catch (err) {
+			alert(err);
+		}
 	}
 }

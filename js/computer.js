@@ -10,10 +10,44 @@ class Computer extends Player {
 		this.#opponentId = opponentId;
 		this.move = this.move.bind(this);
 	}
+	
+	#sleep(ms) {
+		
+		const decision = Utils.getRandom(2);
+
+		if (decision === Constants.HOLD_DECISION) {
+
+            this.#referee.gameState.computerScore += this.#referee.gameState.pendingPoints;
+            this.#referee.gameState.pendingPoints = 0;
+		} else {
+
+            console.log(`Rolling die: ${Utils.rollDie()}`);
+        }
+		
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
 
 	move(myOpponentMove) {
+		
+		this.#referee.disableHumanInteraction(true, myOpponentMove);
+		
+		this.#referee.gui.playRollingDiceVideo();
+		
+		this.#sleep(2000).then(() => {
 
-		// this.#referee.disableHumanInteraction(true, myOpponentMove);
+            if (this.#referee.consultTriumph(this.id)) {
+
+                this.#referee.endGame(this.id);
+            } else {
+                
+                this.#referee.currentTurn = this.#opponentId;
+                this.#referee.informTurn();
+                this.#referee.disableHumanInteraction(false, myOpponentMove);
+            }
+		});
+		
+		
+		
 
 		// if(this.#referee.board.isMovingPossible()) {
 

@@ -4,13 +4,25 @@ class Referee {
 	#gui;
 	#humanId;
 	#computerId;
+	#gameState
 
-	constructor(gui, humanId, computerId) {
+	constructor(gui, humanId, computerId, gameState) {
 
 		this.#gui = gui;
 		this.#humanId = humanId;
 		this.#computerId = computerId;
+		this.#gameState = gameState;
 	}
+
+    get gameState () {
+
+        return this.#gameState;
+    }
+
+    set gameState (gameState) {
+
+        this.#gameState = gameState;
+    }
 
 	get currentTurn() {
 
@@ -39,68 +51,64 @@ class Referee {
 
 	informTurn() {
 
-		// switch(this.#currentTurn) {
-        	// case 0:
-            	// this.#setMessage('CPU turn');
-            	// break;
-        	// case 1:
-            	// this.#setMessage('Your turn!');
-            	// break;
-        	// default:
-            	// this.#setMessage('Something went wrong, sorry.');
-            	// break;
-    	// }
+		switch(this.#currentTurn) {
+        	case 0:
+            	this.#gui.setMessage('CPU turn');
+            	break;
+        	case 1:
+            	this.#gui.setMessage('Your turn!');
+            	break;
+        	default:
+            	this.#gui.setMessage('Something went wrong, sorry.');
+            	break;
+    	}
 	}
 
 	resetGame() {
 
-		// this.#board.resetBoard();
-		// this.#resetInformation();
+		this.#gui.clean();
 	}
 
-	consultTriumph(position, symbol) {
+	consultTriumph(playerId) {
 
-		//return this.#board.isWinner(position, symbol);
+        if (playerId == this.#computerId) {
+
+            return this.#gameState.computerScore >= this.#gameState.goal;
+        } else {
+            
+            return this.#gameState.humanScore >= this.#gameState.goal;
+        }
 	}
 
-	endGame(winner/* = this.#invalidState */) {
+	endGame(winner /* = this.#invalidState */) {
 
 		// this.#board.gui.information.className = 'gameResult';
 
-		// switch(winner) {
-			// case this.#computerId:
-				// this.#setMessage('CPU Wins!');
-				// break;
-			// case this.#humanId:
-				// this.#setMessage('You win! Yay!');
-				// break;
-			// default:
-				// this.#setMessage('Drawn game');
-		// }
+		 switch(winner) {
+            case this.#computerId:
 
-		// this.#board.gui.enablePlayButton();
-		// this.#board.gui.setTextForPlayButton('Play again!');
-		// this.#board.restartTicTacToe();
+                this.#gui.setMessage('CPU Wins!');
+				break;
+			case this.#humanId:
+				
+                this.#gui.setMessage('You win! Yay!');
+				break;
+			default:
+			
+                this.#gui.setMessage('Drawn game');
+        }
+
+		this.#gui.enablePlayButton();
+		this.#gui.setTextForPlayButton('Play again!');
 	}
 
 	disableHumanInteraction(isEnabled, interaction) {
 
-		//this.#board.toggleBoard(isEnabled, interaction);
+		this.#gui.toggleUserInteraction(isEnabled, interaction);
 	}
 
 	disablePlay() {
 
-		//this.#board.gui.disablePlayButton();
-	}
-
-	#setMessage(message) {
-
-		//this.#board.gui.information.innerText = message;
-	}
-
-	#resetInformation() {
-
-		//this.#setMessage('');
-		//this.#board.gui.information.className = '';
+		this.#gui.disablePlayButton();
 	}
 }
