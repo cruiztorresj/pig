@@ -87,7 +87,7 @@ class Referee {
 		 switch(winner) {
             case this.#computerId:
 
-                this.#gui.setMessage('CPU Wins!');
+                this.#gui.setMessage('Computer Wins!');
 				break;
 			case this.#humanId:
 				
@@ -98,6 +98,7 @@ class Referee {
                 this.#gui.setMessage('Drawn game');
         }
 
+        this.resetGame();
 		this.#gui.enablePlayButton();
 		this.#gui.setTextForPlayButton('Play again!');
 	}

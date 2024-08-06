@@ -4,6 +4,7 @@ class State {
 	#humanScore;
 	#pendingPoints;
 	#goal;
+    #isGameOver;
 	
 	constructor(goal) {
 		
@@ -11,7 +12,18 @@ class State {
 		this.#humanScore = 0;
 		this.#pendingPoints = 0;
 		this.#goal = goal;
+        this.#isGameOver = false;
 	}
+
+    get isGameOver () {
+
+        return this.#isGameOver;
+    }
+
+    set isGameOver (isGameOver) {
+
+        this.#isGameOver = isGameOver;
+    }
 	
 	get computerScore() {
 		

@@ -3,7 +3,6 @@ class Gui {
 	#playButton;
 	#rollButton;
 	#holdButton;
-	#information;
 	#playerScore;
 	#cpuScore;
 	#pending;
@@ -16,7 +15,6 @@ class Gui {
 		this.#playButton = document.getElementById('play');
 		this.#rollButton = document.getElementById('roll');
 		this.#holdButton = document.getElementById('hold');
-		this.#information = document.getElementById('info');
 		this.#playerScore = document.getElementById('uscore');
 		this.#cpuScore = document.getElementById('mescore');
 		this.#pending = document.getElementById('pending');
@@ -81,14 +79,14 @@ class Gui {
 		this.#cpuScore = cpuScore;
 	}
 
-	get information() {
+	get gameInformation() {
 
-		return this.#information;
+		return this.#gameInformation;
 	}
 
-	set information(information) {
+	set gameInformation(gameInformation) {
 
-		this.#information = information;
+		this.#gameInformation = gameInformation;
 	}
 	
 	get pending() {
@@ -118,10 +116,33 @@ class Gui {
 	
 	clean() {
 		
-		// clean scores information.
-		// take a look at reset information.
+        this.updateCPUScore('0');
+        this.updatePlayerScore('0');
+        this.updatePending('0');
+        this.updateGameInformation('');
 	}
+
+    updateCPUScore(cpuScore) {
+
+        this.#cpuScore.innerText = cpuScore;
+    }
+
+
+    updateGameInformation(gameInformation) {
+
+        this.#gameInformation.innerText = gameInformation;
+    }
 	
+    updatePlayerScore(playerScore) {
+
+        this.#playerScore.innerText = playerScore;
+    }
+
+    updatePending(pendingInformation) {
+
+        this.#pending.innerText = pendingInformation;
+    }
+
 	setMessage(message) {
 
 		this.#gameInformation.innerText = message;
@@ -143,14 +164,6 @@ class Gui {
 			this.#holdButton.removeEventListener('click', userInteraction);
 		}
 	}
-
-	#resetInformation() {
-
-		//this.#setMessage('');
-		//this.#board.gui.information.className = '';
-	}
-	
-	//roll.addEventListener('click', rolldice);
 
 	animateDice(evt) {
 		
