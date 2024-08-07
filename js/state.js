@@ -15,12 +15,12 @@ class State {
         this.#isGameOver = false;
 	}
 
-    get isGameOver () {
+    get isGameOver() {
 
         return this.#isGameOver;
     }
 
-    set isGameOver (isGameOver) {
+    set isGameOver(isGameOver) {
 
         this.#isGameOver = isGameOver;
     }
