@@ -15,6 +15,14 @@ class State {
         this.#isGameOver = false;
 	}
 
+    reset() {
+
+		this.#computerScore = 0;
+		this.#humanScore = 0;
+		this.#pendingPoints = 0;
+        this.#isGameOver = false;
+    }
+
     get isGameOver() {
 
         return this.#isGameOver;

@@ -56,6 +56,7 @@ class Human extends Player {
     }
 
     rollDie() {
+        console.log(`Actual points: ${this.#referee.gameState.humanScore}`);
 
         this.#decisionMade = Constants.ROLL_DIE_DECISION;
 

@@ -67,6 +67,7 @@ class Referee {
 	resetGame() {
 
 		this.#gui.clean();
+        this.#gameState.reset();
 	}
 
 	consultTriumph(playerId) {
@@ -98,7 +99,6 @@ class Referee {
                 this.#gui.setMessage('Drawn game');
         }
 
-        this.resetGame();
 		this.#gui.enablePlayButton();
 		this.#gui.setTextForPlayButton('Play again!');
 	}
