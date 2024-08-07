@@ -30,19 +30,13 @@ class Computer extends Player {
 
         if (rollDie === Constants.PIG_OUT) {
 
-            console.log('Pig Out!');
-            console.log('*** Before ***');
-            console.log(`Computer Score: ${this.#referee.gameState.computerScore}`);
-            console.log(`Pending Points: ${this.#referee.gameState.pendingPoints}`);
             this.#referee.gameState.computerScore += 1;
             this.#referee.gameState.pendingPoints = 0;
-            console.log('*** After ***');
-            console.log(`Computer Score: ${this.#referee.gameState.computerScore}`);
-            console.log(`Pending Points: ${this.#referee.gameState.pendingPoints}`);
+
             this.#referee.gui.updateCPUScore(this.#referee.gameState.computerScore);
             this.#referee.gui.updatePending(this.#referee.gameState.pendingPoints);
 
-            this.#sleep(2000, Constants.PIG_OUT_MESSAGE).then(() => {
+            this.#sleep(2000, Constants.COMPUTER_PIG_OUT_MESSAGE).then(() => {
 
                 this.#passTheBall(); // I can't decide on a better name.
             });
@@ -65,7 +59,7 @@ class Computer extends Player {
             if (this.#makeDecision()  === Constants.ROLL_DIE_DECISION) {
                 
                 // console.log('Consider visual effect');
-                this.#announce('Computer rolling die');
+                this.#announce(Constants.COMPUTER_ROLLING_DIE);
                 this.#referee.gui.playRollingDieVideo();
             } else {
 
@@ -75,7 +69,7 @@ class Computer extends Player {
                 this.#referee.gameState.pendingPoints = 0;
                 this.#referee.gui.updatePending(this.#referee.gameState.pendingPoints);
 
-                this.#sleep(2000, 'Computer decided to hold').then(() => {
+                this.#sleep(2000, Constants.COMPUTER_HOLD_TURN).then(() => {
 
                     this.#passTheBall(); // I can't decide on a better name.
                 });
@@ -118,7 +112,7 @@ class Computer extends Player {
 
         if (this.#makeDecision() === Constants.ROLL_DIE_DECISION) {
             
-            this.#announce('Computer rolling die');
+            this.#announce(Constants.COMPUTER_ROLLING_DIE);
             this.#referee.gui.playRollingDieVideo();
         } else {
 
@@ -132,7 +126,7 @@ class Computer extends Player {
                 this.#referee.gameState.computerScore += this.#referee.gameState.pendingPoints;
                 this.#referee.gameState.pendingPoints = 0;
 
-                this.#sleep(2000, 'Computer decided to hold').then(() => {
+                this.#sleep(2000, Constants.COMPUTER_HOLD_TURN).then(() => {
 
                     this.#passTheBall(); // I can't decide on a better name.
                 });

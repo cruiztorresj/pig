@@ -15,6 +15,18 @@ class Human extends Player {
         this.experimental = this.experimental.bind(this);
     }
 
+    #announce(message) {
+
+        this.#referee.gui.setMessage(message);
+    }
+
+	#sleep(ms, withMessage) {
+
+        this.#announce(withMessage);
+
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
     experimental() {
 
         // Visual Effect on gameInformation TODO
@@ -26,17 +38,17 @@ class Human extends Player {
 
         if (rollDie === Constants.PIG_OUT) {
 
-            console.log('Pig Out!');
             this.#referee.gameState.humanScore += 1;
             this.#referee.gameState.pendingPoints = 0;
 
             this.#referee.gui.updatePlayerScore(this.#referee.gameState.humanScore);
             this.#referee.gui.updatePending(this.#referee.gameState.pendingPoints);
 
-            this.#referee.gui.setMessage(Constants.PIG_OUT_MESSAGE);
+            this.#sleep(2000, Constants.PLAYER_PIG_OUT_MESSAGE).then(() => {
 
-            (async () => await new Promise(resolve => setTimeout(resolve, 2000)))();
-            this.#referee.gui.setMessage('CPU Turn');
+                this.#announce(Constants.COMPUTER_TURN_MESSAGE);
+                this.#opponent.move();
+            });
 
             return;
 
@@ -50,15 +62,17 @@ class Human extends Player {
         if(this.#decisionMade === Constants.ROLL_DIE_DECISION) {
 
             this.#referee.disableHumanInteraction(false);
+            this.#announce(Constants.PLAYER_TURN_MESSAGE);
         }
 
         this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.experimental);
     }
 
     rollDie() {
-        console.log(`Actual points: ${this.#referee.gameState.humanScore}`);
 
         this.#decisionMade = Constants.ROLL_DIE_DECISION;
+
+        this.#announce(Constants.PLAYER_ROLLING_DIE);
 
         this.#referee.disableHumanInteraction(true);
 
@@ -69,7 +83,7 @@ class Human extends Player {
 
     holdTurn() {
 
-        console.log('User decided hold turn');
+        this.#decisionMade = Constants.HOLD_TURN_DECISION;
 
         this.#referee.gameState.humanScore += this.#referee.gameState.pendingPoints;
         this.#referee.gameState.pendingPoints = 0;
@@ -85,16 +99,17 @@ class Human extends Player {
 
         if(this.#referee.gameState.isGameOver) {
 
-            this.#referee.gui.setMessage('You win!!! Congratulations!!!');
             this.#referee.endGame(this.id);
             return;
         } else {
 
-            this.#referee.gui.setMessage('Player decided to hold');
+            this.#sleep(2000, Constants.PLAYER_HOLD_TURN).then(() => {
 
-            (async () => await new Promise(resolve => setTimeout(resolve, 2000)))();
-            this.#referee.gui.setMessage('CPU Turn');
-            // invoke computer move method
+                this.#sleep(2000, Constants.COMPUTER_TURN_MESSAGE).then(() => {
+
+                    this.#opponent.move();
+                });
+            });
         }
     }
 }

@@ -53,10 +53,10 @@ class Referee {
 
 		switch(this.#currentTurn) {
         	case 0:
-            	this.#gui.setMessage('CPU turn');
+            	this.#gui.setMessage(Constants.COMPUTER_TURN_MESSAGE);
             	break;
         	case 1:
-            	this.#gui.setMessage('Your turn!');
+            	this.#gui.setMessage(Constants.PLAYER_TURN_MESSAGE);
             	break;
         	default:
             	this.#gui.setMessage('Something went wrong, sorry.');
@@ -92,7 +92,7 @@ class Referee {
 				break;
 			case this.#humanId:
 				
-                this.#gui.setMessage('You win! Yay!');
+                this.#gui.setMessage('You win!!! Congratulations!!!');
 				break;
 			default:
 			
