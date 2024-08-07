@@ -2,7 +2,6 @@ class Computer extends Player {
 
 	#referee;
 	#opponentId;
-    #opponentMove;
 
 	constructor(id, referee, opponentId) {
 
@@ -43,7 +42,7 @@ class Computer extends Player {
             this.#referee.gui.updateCPUScore(this.#referee.gameState.computerScore);
             this.#referee.gui.updatePending(this.#referee.gameState.pendingPoints);
 
-            this.#sleep(3000, 'Pig Out!').then(() => {
+            this.#sleep(2000, Constants.PIG_OUT_MESSAGE).then(() => {
 
                 this.#passTheBall(); // I can't decide on a better name.
             });
@@ -67,7 +66,7 @@ class Computer extends Player {
                 
                 // console.log('Consider visual effect');
                 this.#announce('Computer rolling die');
-                this.#referee.gui.playRollingDiceVideo();
+                this.#referee.gui.playRollingDieVideo();
             } else {
 
                 this.#referee.gameState.computerScore += this.#referee.gameState.pendingPoints;
@@ -100,9 +99,10 @@ class Computer extends Player {
             
             this.#referee.currentTurn = this.#opponentId;
             this.#referee.informTurn();
-            this.#referee.disableHumanInteraction(false, this.#opponentMove);
+            this.#referee.disableHumanInteraction(false);
         }
 
+        this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.experimental);
     }
 
     #makeDecision() {
@@ -110,24 +110,22 @@ class Computer extends Player {
         return Utils.getRandom(Constants.IN_GAME_DECISIONS);
     }
 
-	move(myOpponentMove) {
+	move() {
 
-        this.#opponentMove = myOpponentMove;
-		
-		this.#referee.disableHumanInteraction(true, this.#opponentMove);
+		this.#referee.disableHumanInteraction(true);
 
-        this.#referee.gui.rollingDiceVideo.addEventListener('ended', this.experimental);
+        this.#referee.gui.rollingDieVideo.addEventListener('ended', this.experimental);
 
         if (this.#makeDecision() === Constants.ROLL_DIE_DECISION) {
             
             this.#announce('Computer rolling die');
-            this.#referee.gui.playRollingDiceVideo();
+            this.#referee.gui.playRollingDieVideo();
         } else {
 
             if(this.#referee.gameState.isGameOver) {
 
                 this.#referee.endGame(this.id);
-                this.#referee.gui.rollingDiceVideo.removeEventListener('ended', this.experimental);
+                this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.experimental);
                 return;
             } else {
 

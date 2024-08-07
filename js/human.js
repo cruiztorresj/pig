@@ -1,32 +1,90 @@
 class Human extends Player {
 
-	#referee;
-	#opponent;
+    #referee;
+    #opponent;
+    #decisionMade;
 
-	constructor(id, referee, opponent) {
+    constructor(id, referee, opponent) {
 
-		super(id);
-		this.#referee = referee;
-		this.#opponent = opponent;
-		this.move = this.move.bind(this);
-	}
+        super(id);
+        this.#referee = referee;
+        this.#opponent = opponent;
+        this.move = this.move.bind(this);
+        this.rollDie = this.rollDie.bind(this);
+        this.holdTurn = this.holdTurn.bind(this);
+        this.experimental = this.experimental.bind(this);
+    }
 
-	move(evt) {
+    experimental() {
 
-		// const position = this.#referee.board.drawPlayerMove(evt, this.symbol);
+        // Visual Effect on gameInformation TODO
+        // TODO Polish this method
 
-		// if(position !== this.#referee.board.positionNotFound) {
+        const rollDie = Utils.rollDie();
 
-			// if(this.#referee.consultTriumph(position, this.symbol)) {
+        console.log(`Roll die value for the user: ${rollDie} `);
 
-				// this.#referee.disableHumanInteraction(true, this.move);
-				// this.#referee.endGame(this.id);
-			// } else {
+        if (rollDie === Constants.PIG_OUT) {
 
-				// this.#referee.currentTurn = this.#opponent.id;
-				// this.#referee.informTurn();
-				// this.#opponent.move(this.move);
-			// }
-		// }
-	}
+            console.log('Pig Out!');
+            this.#referee.gameState.humanScore += 1;
+            this.#referee.gameState.pendingPoints = 0;
+            console.log('*** After ***');
+            console.log(`Human Score: ${this.#referee.gameState.humanScore}`);
+            console.log(`Pending Points: ${this.#referee.gameState.pendingPoints}`);
+            this.#referee.gui.updatePlayerScore(this.#referee.gameState.humanScore);
+            this.#referee.gui.updatePending(this.#referee.gameState.pendingPoints);
+
+            //this.#sleep(2000).then(() => {
+
+             //   this.#referee.gui.setMessage(Constants.PIG_OUT_MESSAGE);
+              //  this.#passTheBall(); // I can't decide on a better name.
+//            });
+
+            this.#referee.gui.setMessage(Constants.PIG_OUT_MESSAGE);
+
+            (async () => await new Promise(resolve => setTimeout(resolve, 2000)))();
+            this.#referee.gui.setMessage('CPU Turn');
+
+            return;
+
+        } else {
+
+            this.#referee.gameState.pendingPoints += rollDie;
+            this.#referee.gui.updatePending(this.#referee.gameState.pendingPoints);
+        }
+
+        if (this.#referee.consultTriumph(this.id)) {
+
+            this.#referee.gameState.isGameOver(true);
+            this.#referee.gui.rollingDiceVideo.removeEventListener('ended', this.experimental);
+            // System.exit() ???
+        } 
+
+        if(this.#decisionMade === Constants.ROLL_DIE_DECISION) {
+
+            this.#referee.disableHumanInteraction(false);
+        }
+
+        this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.experimental);
+    }
+
+    rollDie() {
+
+        console.log('User decided rolling die');
+
+        this.#decisionMade = Constants.ROLL_DIE_DECISION;
+
+        this.#referee.disableHumanInteraction(true);
+
+        this.#referee.gui.rollingDieVideo.addEventListener('ended', this.experimental);
+
+        this.#referee.gui.playRollingDieVideo();
+    }
+
+    holdTurn() {
+
+        // some code
+        console.log('User decided hold turn');
+    }
 }

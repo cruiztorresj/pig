@@ -16,6 +16,8 @@ class Match {
 	#registerEvent() {
 		
 		this.#referee.gui.playButton.addEventListener('click', this.play);
+		this.#referee.gui.rollButton.addEventListener('click', this.#human.rollDie);
+		this.#referee.gui.holdButton.addEventListener('click', this.#human.holdTurn);
 	}
 
 	play() {
@@ -26,7 +28,7 @@ class Match {
 		this.#referee.currentTurn = 0;
 		this.#referee.informTurn();
 		
-		this.#referee.gui.toggleUserInteraction(false, this.#human.move);
+		this.#referee.gui.toggleUserInteraction(false);
 
 		if(this.#referee.currentTurn === this.#computer.id) {
 

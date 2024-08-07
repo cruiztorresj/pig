@@ -103,9 +103,9 @@ class Referee {
 		this.#gui.setTextForPlayButton('Play again!');
 	}
 
-	disableHumanInteraction(isEnabled, interaction) {
+	disableHumanInteraction(isEnabled) {
 
-		this.#gui.toggleUserInteraction(isEnabled, interaction);
+		this.#gui.toggleUserInteraction(isEnabled);
 	}
 
 	disablePlay() {

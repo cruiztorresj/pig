@@ -5,4 +5,6 @@ class Constants {
     static DIE_SIDES = 6;
     static PIG_OUT = 1;
     static IN_GAME_DECISIONS = 2;
+
+    static PIG_OUT_MESSAGE = 'Pig Out!';
 }

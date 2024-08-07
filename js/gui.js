@@ -6,12 +6,12 @@ class Gui {
 	#playerScore;
 	#cpuScore;
 	#pending;
-	#rollingDiceVideo;
+	#rollingDieVideo;
 	#gameInformation;
 
 	constructor() {
 
-		this.#rollingDiceVideo = document.getElementById('rollingdicevideo');
+		this.#rollingDieVideo = document.getElementById('rollingdicevideo');
 		this.#playButton = document.getElementById('play');
 		this.#rollButton = document.getElementById('roll');
 		this.#holdButton = document.getElementById('hold');
@@ -20,13 +20,12 @@ class Gui {
 		this.#pending = document.getElementById('pending');
 		this.#gameInformation = document.getElementById('info');
 		
-		this.animateDice = this.animateDice.bind(this);
-		this.#rollButton.addEventListener('click', this.animateDice);
+		this.animateDie = this.animateDie.bind(this);
 	}
 	
-	get rollingDiceVideo() {
+	get rollingDieVideo() {
 		
-		return this.#rollingDiceVideo;
+		return this.#rollingDieVideo;
 	}
 
 	get playButton() {
@@ -148,39 +147,39 @@ class Gui {
 		this.#gameInformation.innerText = message;
 	}
 	
-	toggleUserInteraction(isEnabled, userInteraction) {
+	toggleUserInteraction(isEnabled) {
 		
 		if(isEnabled) {
 			
 			this.#rollButton.toggleAttribute('disabled');
 			this.#holdButton.toggleAttribute('disabled');
-			this.#rollButton.removeEventListener('click', userInteraction);
-			this.#holdButton.removeEventListener('click', userInteraction);
+			// this.#rollButton.removeEventListener('click', userInteraction);
+			// this.#holdButton.removeEventListener('click', userInteraction);
 		} else {
 			
 			this.#rollButton.toggleAttribute('disabled');
 			this.#holdButton.toggleAttribute('disabled');
-			this.#rollButton.addEventListener('click', userInteraction);
-			this.#holdButton.removeEventListener('click', userInteraction);
+			// this.#rollButton.addEventListener('click', userInteraction);
+			// this.#holdButton.removeEventListener('click', userInteraction);
 		}
 	}
 
-	animateDice(evt) {
+	animateDie(evt) {
 		
-		if (this.#rollingDiceVideo.paused) {
+		if (this.#rollingDieVideo.paused) {
 			
-			this.playRollingDiceVideo();
+			this.playRollingDieVideo();
 		} else {
 			
-			this.#rollingDiceVideo.pause();
+			this.#rollingDieVideo.pause();
 		}
 	}
 
-	async playRollingDiceVideo() {
+	async playRollingDieVideo() {
 		
 		try {
 			
-			await this.#rollingDiceVideo.play();
+			await this.#rollingDieVideo.play();
 		} catch (err) {
 			alert(err);
 		}
