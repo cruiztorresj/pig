@@ -1,6 +1,9 @@
 # Pig
 <img src="images/Pig.png" alt="Pig drawing" width="250" height="250"/>
 
+## Live version
+Play a [live version](https://calebjosue.gigalixirapp.com/playground/pig/index.html) of this game.
+
 ## Mechanics
 You start a new game by clicking the Play button. You will be presented with two options (In the case you go first) {Roll, Hold}.
 Roll will roll the die and add the obtained points to the pending area.
