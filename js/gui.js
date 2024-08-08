@@ -99,12 +99,14 @@ class Gui {
 	}
 
 	disablePlayButton() {
-
+        
+        this.#playButton.classList.remove('invite');
 		this.#playButton.setAttribute('disabled', '');
 	}
 
 	enablePlayButton() {
 
+        this.#playButton.classList.add('invite');
 		this.#playButton.removeAttribute('disabled');
 	}
 
