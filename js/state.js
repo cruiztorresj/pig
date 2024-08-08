@@ -20,7 +20,7 @@ class State {
     reset() {
 
 		this.#computerScore = 0;
-		this.#humanScore = 0;
+		this.#humanScore = 49;
 		this.#pendingPoints = 0;
         this.#isGameOver = false;
         this.#isUIEnabled = false;

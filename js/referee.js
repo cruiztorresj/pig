@@ -83,7 +83,7 @@ class Referee {
 
 	endGame(winner /* = this.#invalidState */) {
 
-		// this.#board.gui.information.className = 'gameResult';
+		this.gui.gameInformation.className = 'gameResult';
 
 		 switch(winner) {
             case this.#computerId:

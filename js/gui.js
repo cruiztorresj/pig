@@ -119,6 +119,7 @@ class Gui {
         this.updatePlayerScore('0');
         this.updatePending('0');
         this.updateGameInformation('');
+        this.gameInformation.className = '';
 	}
 
     updateCPUScore(cpuScore) {
