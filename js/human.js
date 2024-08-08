@@ -12,7 +12,7 @@ class Human extends Player {
         this.move = this.move.bind(this);
         this.rollDie = this.rollDie.bind(this);
         this.holdTurn = this.holdTurn.bind(this);
-        this.experimental = this.experimental.bind(this);
+        this.playerRollDieAnimationEnd = this.playerRollDieAnimationEnd.bind(this);
     }
 
     #announce(message) {
@@ -27,14 +27,12 @@ class Human extends Player {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
-    experimental() {
+    playerRollDieAnimationEnd() {
 
         // Visual Effect on gameInformation TODO
         // TODO Polish this method
 
         const rollDie = Utils.rollDie();
-
-        console.log(`Roll die value for the user: ${rollDie} `);
 
         if (rollDie === Constants.PIG_OUT) {
 
@@ -46,8 +44,12 @@ class Human extends Player {
 
             this.#sleep(2000, Constants.PLAYER_PIG_OUT_MESSAGE).then(() => {
 
-                this.#announce(Constants.COMPUTER_TURN_MESSAGE);
-                this.#opponent.move();
+                this.#sleep(2000, Constants.COMPUTER_TURN_MESSAGE).then(() => {
+
+                    this.#referee.gui.rollingDieVideo.removeEventListener('ended',
+                                                                        this.playerRollDieAnimationEnd);
+                    this.#opponent.move();
+                });
             });
 
             return;
@@ -70,7 +72,7 @@ class Human extends Player {
             this.#announce(Constants.PLAYER_TURN_MESSAGE);
         }
 
-        this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.experimental);
+        this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.playerRollDieAnimationEnd);
     }
 
     rollDie() {
@@ -82,7 +84,7 @@ class Human extends Player {
         this.#referee.toggleHumanInteraction();
         this.#referee.gameState.isUIEnabled = false;
 
-        this.#referee.gui.rollingDieVideo.addEventListener('ended', this.experimental);
+        this.#referee.gui.rollingDieVideo.addEventListener('ended', this.playerRollDieAnimationEnd);
 
         this.#referee.gui.playRollingDieVideo();
     }
@@ -96,7 +98,7 @@ class Human extends Player {
 
         this.#referee.gameState.isGameOver = this.#referee.consultTriumph(this.id);
 
-        this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.experimental);
+        this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.playerRollDieAnimationEnd);
 
         this.#referee.gui.updatePlayerScore(this.#referee.gameState.humanScore);
         this.#referee.gui.updatePending(this.#referee.gameState.pendingPoints);

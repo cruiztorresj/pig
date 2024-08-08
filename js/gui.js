@@ -153,7 +153,7 @@ class Gui {
         this.#holdButton.toggleAttribute('disabled');
 	}
 
-	animateDie(evt) {
+	animateDie() {
 		
 		if (this.#rollingDieVideo.paused) {
 			

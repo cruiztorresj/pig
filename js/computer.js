@@ -9,7 +9,7 @@ class Computer extends Player {
 		this.#referee = referee;
 		this.#opponentId = opponentId;
 		this.move = this.move.bind(this);
-		this.experimental = this.experimental.bind(this);
+		this.computerRollDieAnimationEnd = this.computerRollDieAnimationEnd.bind(this);
 	}
 	
 	#sleep(ms, withMessage) {
@@ -19,14 +19,12 @@ class Computer extends Player {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
-    experimental() {
+    computerRollDieAnimationEnd() {
 
-        // Visual Effect on gameInformation TODO
+        // TODO Effect on gameInformation TODO
         // TODO Polish this method
 
         const rollDie = Utils.rollDie();
-
-        console.log(`Roll die value: ${rollDie} `);
 
         if (rollDie === Constants.PIG_OUT) {
 
@@ -38,9 +36,13 @@ class Computer extends Player {
 
             this.#sleep(2000, Constants.COMPUTER_PIG_OUT_MESSAGE).then(() => {
 
-                this.#passTheBall(); // I can't decide on a better name.
-            });
+                this.#sleep(500, Constants.PLAYER_TURN_MESSAGE).then(() => {
 
+                    this.#referee.gui.rollingDieVideo.removeEventListener('ended',
+                                                                        this.computerRollDieAnimationEnd);
+                    this.#passTheBall();
+                });
+            });
             return;
 
         } else {
@@ -54,13 +56,13 @@ class Computer extends Player {
 
             this.#referee.gameState.isGameOver = true;
             this.#referee.endGame(this.id);
-            this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.experimental);
+            this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.computerRollDieAnimationEnd);
             return;
         } else {
 
             if (this.#makeDecision() === Constants.ROLL_DIE_DECISION) {
                 
-                // console.log('Consider visual effect');
+                // TODO Consider visual effect
                 this.#announce(Constants.COMPUTER_ROLLING_DIE);
                 this.#referee.gui.playRollingDieVideo();
             } else {
@@ -75,7 +77,6 @@ class Computer extends Player {
 
                     this.#passTheBall(); // I can't decide on a better name.
                 });
-                console.log('Passing the ball to the human');
             }
 
         }
@@ -98,7 +99,7 @@ class Computer extends Player {
             this.#referee.toggleHumanInteraction();
         }
 
-        this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.experimental);
+        this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.computerRollDieAnimationEnd);
     }
 
     #makeDecision() {
@@ -114,7 +115,7 @@ class Computer extends Player {
             this.#referee.gameState.isUIEnabled = false;
         }
 
-        this.#referee.gui.rollingDieVideo.addEventListener('ended', this.experimental);
+        this.#referee.gui.rollingDieVideo.addEventListener('ended', this.computerRollDieAnimationEnd);
 
         if (this.#makeDecision() === Constants.ROLL_DIE_DECISION) {
             
@@ -125,7 +126,8 @@ class Computer extends Player {
             if(this.#referee.gameState.isGameOver) {
 
                 this.#referee.endGame(this.id);
-                this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.experimental);
+                this.#referee.gui.rollingDieVideo.removeEventListener('ended',
+                                                                    this.computerRollDieAnimationEnd);
                 return;
             } else {
 
