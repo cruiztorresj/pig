@@ -61,7 +61,12 @@ class Human extends Player {
 
         if(this.#decisionMade === Constants.ROLL_DIE_DECISION) {
 
-            this.#referee.disableHumanInteraction(false);
+            if(!this.#referee.gameState.isUIEnabled){
+
+                this.#referee.toggleHumanInteraction();
+                this.#referee.gameState.isUIEnabled = true;
+            }
+
             this.#announce(Constants.PLAYER_TURN_MESSAGE);
         }
 
@@ -74,7 +79,8 @@ class Human extends Player {
 
         this.#announce(Constants.PLAYER_ROLLING_DIE);
 
-        this.#referee.disableHumanInteraction(true);
+        this.#referee.toggleHumanInteraction();
+        this.#referee.gameState.isUIEnabled = false;
 
         this.#referee.gui.rollingDieVideo.addEventListener('ended', this.experimental);
 
@@ -95,7 +101,8 @@ class Human extends Player {
         this.#referee.gui.updatePlayerScore(this.#referee.gameState.humanScore);
         this.#referee.gui.updatePending(this.#referee.gameState.pendingPoints);
 
-        this.#referee.disableHumanInteraction(true);
+        this.#referee.toggleHumanInteraction();
+        this.#referee.gameState.isUIEnabled = false;
 
         if(this.#referee.gameState.isGameOver) {
 

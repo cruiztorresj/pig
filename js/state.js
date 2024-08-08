@@ -5,6 +5,7 @@ class State {
 	#pendingPoints;
 	#goal;
     #isGameOver;
+    #isUIEnabled;
 	
 	constructor(goal) {
 		
@@ -13,6 +14,7 @@ class State {
 		this.#pendingPoints = 0;
 		this.#goal = goal;
         this.#isGameOver = false;
+        this.#isUIEnabled = false;
 	}
 
     reset() {
@@ -21,6 +23,17 @@ class State {
 		this.#humanScore = 0;
 		this.#pendingPoints = 0;
         this.#isGameOver = false;
+        this.#isUIEnabled = false;
+    }
+
+    get isUIEnabled() {
+
+        return this.#isUIEnabled;
+    }
+
+    set isUIEnabled(isUIEnabled) {
+
+        this.#isUIEnabled = isUIEnabled;
     }
 
     get isGameOver() {

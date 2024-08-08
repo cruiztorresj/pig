@@ -48,15 +48,17 @@ class Computer extends Player {
             this.#referee.gameState.pendingPoints += rollDie;
         }
 
-       this.#referee.gui.updatePending(this.#referee.gameState.pendingPoints);
+        this.#referee.gui.updatePending(this.#referee.gameState.pendingPoints);
 
-        if (this.#referee.consultTriumph(this.id)) {
+        if (this.#referee.gameState.pendingPoints >= this.#referee.gameState.goal) {
 
-            this.#referee.gameState.isGameOver(true);
-            // System.exit() ???
+            this.#referee.gameState.isGameOver = true;
+            this.#referee.endGame(this.id);
+            this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.experimental);
+            return;
         } else {
 
-            if (this.#makeDecision()  === Constants.ROLL_DIE_DECISION) {
+            if (this.#makeDecision() === Constants.ROLL_DIE_DECISION) {
                 
                 // console.log('Consider visual effect');
                 this.#announce(Constants.COMPUTER_ROLLING_DIE);
@@ -93,7 +95,7 @@ class Computer extends Player {
             
             this.#referee.currentTurn = this.#opponentId;
             this.#referee.informTurn();
-            this.#referee.disableHumanInteraction(false);
+            this.#referee.toggleHumanInteraction();
         }
 
         this.#referee.gui.rollingDieVideo.removeEventListener('ended', this.experimental);
@@ -106,7 +108,11 @@ class Computer extends Player {
 
 	move() {
 
-		this.#referee.disableHumanInteraction(true);
+        if(this.#referee.gameState.isUIEnabled) {
+
+            this.#referee.toggleHumanInteraction();
+            this.#referee.gameState.isUIEnabled = false;
+        }
 
         this.#referee.gui.rollingDieVideo.addEventListener('ended', this.experimental);
 
@@ -128,7 +134,7 @@ class Computer extends Player {
 
                 this.#sleep(2000, Constants.COMPUTER_HOLD_TURN).then(() => {
 
-                    this.#passTheBall(); // I can't decide on a better name.
+                    this.#passTheBall();
                 });
             }
         }

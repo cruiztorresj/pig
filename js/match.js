@@ -27,7 +27,8 @@ class Match {
 		this.#referee.currentTurn = this.#referee.decideFirstTurn();
 		this.#referee.informTurn();
 		
-		this.#referee.gui.toggleUserInteraction(false);
+		this.#referee.gui.toggleUserInteraction();
+        this.#referee.gameState.isUIEnabled = true;
 
 		if(this.#referee.currentTurn === this.#computer.id) {
 

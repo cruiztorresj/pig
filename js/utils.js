@@ -2,7 +2,7 @@ class Utils {
 
 	static getRandom(upperLimit) {
 
-		return Math.floor(Math.random() * upperLimit);
+        return Math.floor(Math.random() * upperLimit);
 	}
 
     static rollDie() {

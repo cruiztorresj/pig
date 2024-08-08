@@ -147,21 +147,10 @@ class Gui {
 		this.#gameInformation.innerText = message;
 	}
 	
-	toggleUserInteraction(isEnabled) {
+	toggleUserInteraction() {
 		
-		if(isEnabled) {
-			
-			this.#rollButton.toggleAttribute('disabled');
-			this.#holdButton.toggleAttribute('disabled');
-			// this.#rollButton.removeEventListener('click', userInteraction);
-			// this.#holdButton.removeEventListener('click', userInteraction);
-		} else {
-			
-			this.#rollButton.toggleAttribute('disabled');
-			this.#holdButton.toggleAttribute('disabled');
-			// this.#rollButton.addEventListener('click', userInteraction);
-			// this.#holdButton.removeEventListener('click', userInteraction);
-		}
+        this.#rollButton.toggleAttribute('disabled');
+        this.#holdButton.toggleAttribute('disabled');
 	}
 
 	animateDie(evt) {
