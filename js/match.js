@@ -24,6 +24,7 @@ class Match {
 
 		this.#referee.disablePlay();
 		this.#referee.resetGame();
+        this.#referee.playBGM();
 		this.#referee.currentTurn = this.#referee.decideFirstTurn();
 		this.#referee.informTurn();
 		

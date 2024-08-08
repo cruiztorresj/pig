@@ -3,12 +3,14 @@ class Human extends Player {
     #referee;
     #opponent;
     #decisionMade;
+    #pigButtonSound;
 
-    constructor(id, referee, opponent) {
+    constructor(id, referee, opponent, pigButtonSound) {
 
         super(id);
         this.#referee = referee;
         this.#opponent = opponent;
+        this.#pigButtonSound = pigButtonSound;
         this.move = this.move.bind(this);
         this.rollDie = this.rollDie.bind(this);
         this.holdTurn = this.holdTurn.bind(this);
@@ -77,6 +79,8 @@ class Human extends Player {
 
     rollDie() {
 
+        this.#pigButtonSound.play();
+
         this.#decisionMade = Constants.ROLL_DIE_DECISION;
 
         this.#announce(Constants.PLAYER_ROLLING_DIE);
@@ -90,6 +94,8 @@ class Human extends Player {
     }
 
     holdTurn() {
+
+        this.#pigButtonSound.play();
 
         this.#decisionMade = Constants.HOLD_TURN_DECISION;
 

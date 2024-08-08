@@ -18,7 +18,10 @@ Perhaps some behavior will feel odd to you, for example the fact the users can k
 You may also be wondering why the digital computer does not reap pending points when a winning condition is on the horizon, it is just the strategy implemented. See the aforementioned class.
 
 ## Further development.
-Feel free to fork this repository and enhance it at will, you can add music for example, you may want to add some flashing lights when certain events take place, you can present the actual roll die value that it is being obtained. I will try add some of these enhacements and maybe come up with a multiplayer version, I am not promising anything.
+Feel free to fork this repository and enhance it at will, you may want to add some flashing lights when certain events take place, you can present the actual roll die value that it is being obtained. I will try add some of these enhacements and maybe come up with a multiplayer version, I am not promising anything.
+
+## Known issues.
+There is this notification the web browser will give you about pausing a media element to save energy, it does not happen frequently, and you may be able to fix it by going with a gif animation instead. There are tools to conver video to gif images out there.
 
 ## More information.
 If you have any further inquiry about this game please visit my [website](https://calebjosue.gigalixirapp.com) so you can let me know.

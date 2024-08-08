@@ -4,14 +4,16 @@ class Referee {
 	#gui;
 	#humanId;
 	#computerId;
-	#gameState
+	#gameState;
+    #pigTheme;
 
-	constructor(gui, humanId, computerId, gameState) {
+	constructor(gui, humanId, computerId, gameState, pigTheme) {
 
 		this.#gui = gui;
 		this.#humanId = humanId;
 		this.#computerId = computerId;
 		this.#gameState = gameState;
+        this.#pigTheme = pigTheme;
 	}
 
     get gameState () {
@@ -43,6 +45,14 @@ class Referee {
 
 		this.#gui = gui;
 	}
+
+    playBGM() {
+
+        this.#pigTheme.setAttribute('loop', '');
+        this.#pigTheme.volume = 0.4;
+        this.#pigTheme.play();
+    }
+    
 
 	decideFirstTurn() {
 
@@ -82,6 +92,9 @@ class Referee {
 	}
 
 	endGame(winner /* = this.#invalidState */) {
+
+        this.#pigTheme.pause();
+        this.#pigTheme.load();
 
 		this.gui.gameInformation.className = 'gameResult';
 
